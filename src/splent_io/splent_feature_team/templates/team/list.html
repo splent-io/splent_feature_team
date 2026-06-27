@@ -1,0 +1,27 @@
+{% extends "public_base.html" %}
+
+{% block title %}Team — {{ SPLENT_APP }}{% endblock %}
+
+{% block hero %}
+    {{ render_block('hero', eyebrow='People', title='Team',
+                    subtitle='The people behind the project.') }}
+{% endblock %}
+
+{% block content %}
+<div class="container section">
+    {% for group, members in groups.items() %}
+    <h2 class="section-title">{{ group }}</h2>
+    <div class="card-grid">
+        {% for m in members %}
+        <a class="card person" href="{{ url_for('team.detail', slug=m.slug) }}">
+            {% if m.photo %}<img class="person__photo" src="{{ m.photo }}" alt="">{% endif %}
+            <h3 class="card__title">{{ m.name }}</h3>
+            {% if m.role %}<p class="card__meta">{{ m.role }}{% if m.affiliation %} · {{ m.affiliation }}{% endif %}</p>{% endif %}
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="card__text">No team members yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "public_base.html" %}
+
+{% block title %}{{ member.name }} — {{ site.name }}{% endblock %}
+
+{% block hero %}
+    {{ render_block('hero', eyebrow=member.role, title=member.name, subtitle=member.affiliation) }}
+{% endblock %}
+
+{% block content %}
+<article class="container section">
+    {% if member.photo %}
+    <img src="{{ member.photo }}" alt="{{ member.name }}" style="width:160px;height:160px;border-radius:50%;object-fit:cover;margin-bottom:1rem">
+    {% endif %}
+
+    {% if member.bio %}<div class="prose">{{ member.bio | safe }}</div>{% endif %}
+
+    {% if member.links %}
+    <h2 class="section-title" style="margin-top:1.5rem">Profiles &amp; contact</h2>
+    <div class="member-links" style="display:flex;flex-wrap:wrap;gap:.5rem">
+        {% for l in member.links %}
+        <a class="btn btn-ghost" href="{{ l.url }}" target="_blank" rel="noopener">{{ l.label }}</a>
+        {% endfor %}
+    </div>
+    {% elif member.email %}
+    <p class="card__meta" style="margin-top:1rem">✉ <a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
+    {% endif %}
+
+    <p style="margin-top:2rem"><a href="{{ url_for('team.index') }}">← Back to team</a></p>
+</article>
+{% endblock %}
