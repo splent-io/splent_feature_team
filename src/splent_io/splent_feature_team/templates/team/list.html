@@ -3,8 +3,8 @@
 {% block title %}Team — {{ SPLENT_APP }}{% endblock %}
 
 {% block hero %}
-    {{ render_block('hero', eyebrow='People', title='Team',
-                    subtitle='The people behind the project.') }}
+    {{ render_block('hero', eyebrow=_('People'), title=_('Team'),
+                    subtitle=_('The people behind the project.')) }}
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,7 @@
         {% endfor %}
     </div>
     {% else %}
-    <p class="card__text">No team members yet.</p>
+    <p class="card__text">{{ _('No team members yet.') }}</p>
     {% endfor %}
 </div>
 {% endblock %}
