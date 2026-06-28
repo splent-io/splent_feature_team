@@ -9,14 +9,14 @@
 
 {% block content %}
 <div class="container section">
-    {% for group, members in groups.items() %}
-    <h2 class="section-title">{{ group }}</h2>
+    {% for role, members in groups.items() %}
+    <h2 class="section-title">{{ role.name }}</h2>
     <div class="card-grid">
         {% for m in members %}
         <a class="card person" href="{{ url_for('team.detail', slug=m.slug) }}">
             {% if m.photo %}<img class="person__photo" src="{{ m.photo }}" alt="">{% endif %}
             <h3 class="card__title">{{ m.name }}</h3>
-            {% if m.role %}<p class="card__meta">{{ m.role }}{% if m.affiliation %} · {{ m.affiliation }}{% endif %}</p>{% endif %}
+            {% if m.position %}<p class="card__meta">{{ m.position }}{% if m.affiliation %} · {{ m.affiliation }}{% endif %}</p>{% endif %}
         </a>
         {% endfor %}
     </div>

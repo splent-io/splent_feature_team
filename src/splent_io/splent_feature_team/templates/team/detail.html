@@ -3,13 +3,21 @@
 {% block title %}{{ member.name }} — {{ site.name }}{% endblock %}
 
 {% block hero %}
-    {{ render_block('hero', eyebrow=member.role, title=member.name, subtitle=member.affiliation) }}
+    {{ render_block('hero', eyebrow=member.position, title=member.name, subtitle=member.affiliation) }}
 {% endblock %}
 
 {% block content %}
 <article class="container section">
     {% if member.photo %}
     <img src="{{ member.photo }}" alt="{{ member.name }}" style="width:160px;height:160px;border-radius:50%;object-fit:cover;margin-bottom:1rem">
+    {% endif %}
+
+    {% if member.roles %}
+    <div class="member-roles" style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1rem">
+        {% for role in member.roles %}
+        <span class="badge">{{ role.name }}</span>
+        {% endfor %}
+    </div>
     {% endif %}
 
     {% if member.bio %}<div class="prose">{{ member.bio | safe }}</div>{% endif %}

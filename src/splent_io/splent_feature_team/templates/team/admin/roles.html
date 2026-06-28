@@ -1,0 +1,79 @@
+{% extends "base_template.html" %}
+
+{% block title %}Roles{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 mb-0">Roles</h1>
+        <p class="text-muted mb-0">Sections that group team members.</p>
+    </div>
+    <a href="{{ url_for('team.admin_index') }}" class="btn btn-outline-secondary">← Back to team</a>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{ 'danger' if category == 'danger' else 'success' }} py-2">{{ message }}</div>
+    {% endfor %}
+{% endwith %}
+
+<div class="card mb-4">
+    <div class="card-header"><strong>New role</strong></div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('team.admin_roles') }}" class="row g-2 align-items-end">
+            <div class="col-md-7">
+                <label class="form-label">Name *</label>
+                <input name="name" class="form-control" required placeholder="e.g. Faculty">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Order</label>
+                <input name="order" type="number" class="form-control" value="0">
+            </div>
+            <div class="col-md-2 d-grid">
+                <button class="btn btn-primary" type="submit">Add role</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header"><strong>Existing roles</strong></div>
+    {% if roles %}
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th style="width:120px">Order</th>
+                    <th style="width:200px" class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in roles %}
+                <tr>
+                    <td colspan="2">
+                        <form method="POST" action="{{ url_for('team.admin_role_edit', role_id=r.id) }}" class="row g-2 align-items-center" id="role-edit-{{ r.id }}">
+                            <div class="col-md-8">
+                                <input name="name" class="form-control form-control-sm" value="{{ r.name }}" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input name="order" type="number" class="form-control form-control-sm" value="{{ r.order }}">
+                            </div>
+                        </form>
+                    </td>
+                    <td class="text-end">
+                        <button class="btn btn-sm btn-outline-primary" type="submit" form="role-edit-{{ r.id }}">Save</button>
+                        <form method="POST" action="{{ url_for('team.admin_role_delete', role_id=r.id) }}" class="d-inline" onsubmit="return confirm('Delete role {{ r.name }}?')">
+                            <button class="btn btn-sm btn-outline-danger" type="submit" title="Delete">✕</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="card-body text-muted small">No roles yet. Create the first one above.</div>
+    {% endif %}
+</div>
+{% endblock %}
