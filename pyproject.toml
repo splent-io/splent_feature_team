@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "splent_feature_team"
-version = "0.0.1"
+version = "0.1.0"
 readme = "README.md"
 requires-python = ">=3.13"
 
@@ -23,34 +23,30 @@ exclude = ["*.tests", "*.tests.*"]
 [tool.splent]
 cli_version = "1.11.0"
 
-# ── Feature Contract ──────────────────────────────────────────────────────────
-# Declares what this feature provides to and requires from the product.
-# Used by `splent feature:check` and `splent product:derive` for validation.
+# ── Feature Contract (auto-generated) ────────────────────────────────────────
+# Do not edit manually — re-run `splent feature:contract --write` to refresh.
 [tool.splent.contract]
 description = "Team — people directory (organisers, faculty, speakers); public list/detail + admin CRUD"
 
 [tool.splent.contract.provides]
-# Routes exposed by this feature
-routes = ["/team", "/team/<slug>"]
-# Blueprint names registered into Flask
-blueprints = ["team_bp"]
-# SQLAlchemy models introduced by this feature
-models = ["TeamMember"]
-# CLI commands added by this feature
-commands = []
+routes     = ["/admin/team", "/admin/team/<int:member_id>/delete", "/admin/team/<int:member_id>/edit", "/admin/team/new", "/admin/team/roles", "/admin/team/roles/<int:role_id>/delete", "/admin/team/roles/<int:role_id>/edit", "/team", "/team/<slug>"]
+blueprints = []
+models     = ["Role", "TeamMember"]
+commands   = ["hello"]
+hooks      = ["layout.authenticated_sidebar"]
+services   = ["TeamService"]
+signals    = []
+translations = ["es"]
+docker     = []
 
 [tool.splent.contract.requires]
-# Other SPLENT features this feature depends on (e.g. ["auth", "mail"])
-features = ["theme", "media"]
-# Environment variables this feature expects to be set
+features = []
 env_vars = []
+signals  = []
 
-# ── Extension points ──────────────────────────────────────────────────────────
-# Declares what other features can override or extend via refinement.
-# See: splent feature:xray
 [tool.splent.contract.extensible]
-services = []
-templates = ["team/list.html", "team/detail.html"]
-models = []
-hooks = []
-routes = false
+services  = ["TeamService"]
+templates = ["team/admin/form.html", "team/admin/list.html", "team/admin/roles.html", "team/detail.html", "team/index.html", "team/list.html"]
+models    = ["Role", "TeamMember"]
+hooks     = ["layout.authenticated_sidebar"]
+routes    = false

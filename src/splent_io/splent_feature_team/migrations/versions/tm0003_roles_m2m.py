@@ -77,8 +77,7 @@ def upgrade():
         if g and g in role_id:
             conn.execute(
                 sa.text(
-                    "INSERT INTO team_member_role (member_id, role_id) "
-                    "VALUES (:m, :r)"
+                    "INSERT INTO team_member_role (member_id, role_id) VALUES (:m, :r)"
                 ),
                 {"m": mid, "r": role_id[g]},
             )
@@ -92,7 +91,9 @@ def downgrade():
     op.add_column(
         "team_member", sa.Column("group", sa.String(length=128), nullable=True)
     )
-    op.add_column("team_member", sa.Column("role", sa.String(length=255), nullable=True))
+    op.add_column(
+        "team_member", sa.Column("role", sa.String(length=255), nullable=True)
+    )
     op.execute("UPDATE team_member SET role = position")
     op.drop_table("team_member_role")
     op.drop_index(op.f("ix_role_slug"), table_name="role")
