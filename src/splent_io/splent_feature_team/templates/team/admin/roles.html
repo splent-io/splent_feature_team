@@ -64,7 +64,7 @@
                     <td class="text-end">
                         <button class="btn btn-sm btn-outline-primary" type="submit" form="role-edit-{{ r.id }}">Save</button>
                         <form method="POST" action="{{ url_for('team.admin_role_delete', role_id=r.id) }}" class="d-inline" onsubmit="return confirm('Delete role {{ r.name }}?')">
-                            <button class="btn btn-sm btn-outline-danger" type="submit" title="Delete">✕</button>
+                            <button class="btn btn-sm btn-outline-danger" type="submit" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                         </form>
                     </td>
                 </tr>

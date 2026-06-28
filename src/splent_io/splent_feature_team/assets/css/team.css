@@ -1,0 +1,63 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   splent_feature_team — public team-member detail sheet.
+   Token-driven: every colour/radius comes from the theme's --brand-* custom
+   properties, so a skin restyles it for free. Loaded via register_asset on top
+   of the theme's public.css. No inline styles, no CDN.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.member-detail {
+    max-width: 72ch;
+}
+
+.member-detail__photo {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.member-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    margin-bottom: 1rem;
+}
+
+.member-detail .section-title {
+    margin-top: 1.5rem;
+}
+
+.member-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+/* ── Email contact row: text label / small mail icon, no emoji ─────────────── */
+.member-contact {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
+.member-contact__icon {
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    color: var(--brand-primary, #2563eb);
+}
+
+.member-contact__label {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--brand-muted, #6b7280);
+}
+
+.member-detail__back {
+    display: inline-block;
+    margin-top: 2rem;
+}
