@@ -1,0 +1,66 @@
+{% extends "base_template.html" %}
+
+{% block title %}{{ 'Edit member' if member else 'Add member' }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">{{ 'Edit member' if member else 'Add member' }}</h1>
+    <a href="{{ url_for('team.admin_index') }}" class="btn btn-outline-secondary">← Back to team</a>
+</div>
+
+<form method="POST" class="card">
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Name *</label>
+                <input name="name" class="form-control" required value="{{ member.name if member else '' }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Role / title</label>
+                <input name="role" class="form-control" value="{{ member.role if member else '' }}" placeholder="e.g. Full Professor">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Affiliation</label>
+                <input name="affiliation" class="form-control" value="{{ member.affiliation if member else '' }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Group / role section</label>
+                <input name="group" class="form-control" list="known-groups" value="{{ member.group if member else '' }}" placeholder="Pick an existing group or type a new one">
+                <datalist id="known-groups">{% for g in known_groups %}<option value="{{ g }}">{% endfor %}</datalist>
+                <div class="form-text">Type a new name to create a new group.</div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input name="email" type="email" class="form-control" value="{{ member.email if member else '' }}">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Photo URL</label>
+                <input name="photo" class="form-control" value="{{ member.photo if member else '' }}">
+            </div>
+            <div class="col-12">
+                <label class="form-label">Bio</label>
+                <textarea name="bio" class="form-control" rows="3">{{ member.bio if member else '' }}</textarea>
+            </div>
+            <div class="col-12">
+                <label class="form-label">Links <span class="text-muted">(one per line — <code>Label|https://url</code>)</span></label>
+                <textarea name="links" class="form-control" rows="3" placeholder="ORCID|https://orcid.org/0000-...">{% if member and member.links %}{% for l in member.links %}{{ l.label }}|{{ l.url }}
+{% endfor %}{% endif %}</textarea>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Order</label>
+                <input name="order" type="number" class="form-control" value="{{ member.order if member else 0 }}">
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="published" id="published" {{ 'checked' if (member.published if member else True) else '' }}>
+                    <label class="form-check-label" for="published">Published</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-end">
+        <a href="{{ url_for('team.admin_index') }}" class="btn btn-link text-muted">Cancel</a>
+        <button class="btn btn-primary" type="submit">{{ 'Save changes' if member else 'Add member' }}</button>
+    </div>
+</form>
+{% endblock %}
