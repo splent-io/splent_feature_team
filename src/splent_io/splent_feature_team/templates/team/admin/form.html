@@ -3,7 +3,7 @@
 {% block title %}{{ 'Edit member' if member else 'Add member' }}{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex flex-column align-items-start gap-2 mb-4">
     <h1 class="h3 mb-0">{{ 'Edit member' if member else 'Add member' }}</h1>
     <a href="{{ url_for('team.admin_index') }}" class="btn btn-outline-secondary">← Back to team</a>
 </div>
